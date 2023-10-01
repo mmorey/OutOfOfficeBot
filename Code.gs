@@ -40,6 +40,12 @@ function postToSlack() {
   // Only run the script on workdays (Monday = 1, ..., Friday = 5)
   if (dayOfWeek >= 1 && dayOfWeek <= 5) {
     const calendar = CalendarApp.getCalendarById(calendarId);
+
+    // Check if the calendar exists or if the user is authorized
+    if (!calendar) {
+      console.error('Failed to access the calendar. Make sure the calendarId is correct and you have the necessary permissions.');
+      return;
+    }
     
     // Get today's events
     const events = calendar.getEventsForDay(now);
